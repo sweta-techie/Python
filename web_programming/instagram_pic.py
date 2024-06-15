@@ -2,6 +2,7 @@ from datetime import UTC, datetime
 
 import requests
 from bs4 import BeautifulSoup
+from security import safe_requests
 
 
 def download_image(url: str) -> str:
@@ -15,7 +16,7 @@ def download_image(url: str) -> str:
         A message indicating the result of the operation.
     """
     try:
-        response = requests.get(url, timeout=10)
+        response = safe_requests.get(url, timeout=10)
         response.raise_for_status()
     except requests.exceptions.RequestException as e:
         return f"An error occurred during the HTTP request to {url}: {e!r}"
@@ -30,7 +31,7 @@ def download_image(url: str) -> str:
         return f"Image URL not found in meta tag {image_meta_tag}."
 
     try:
-        image_data = requests.get(image_url, timeout=10).content
+        image_data = safe_requests.get(image_url, timeout=10).content
     except requests.exceptions.RequestException as e:
         return f"An error occurred during the HTTP request to {image_url}: {e!r}"
     if not image_data:
