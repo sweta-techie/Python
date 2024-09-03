@@ -8,6 +8,7 @@ loop to reduce time complexity.
 """
 
 from __future__ import annotations
+import secrets
 
 
 def max_sum_in_array(array: list[int], k: int) -> int:
@@ -38,9 +39,8 @@ def max_sum_in_array(array: list[int], k: int) -> int:
 
 if __name__ == "__main__":
     from doctest import testmod
-    from random import randint
 
     testmod()
-    array = [randint(-1000, 1000) for i in range(100)]
-    k = randint(0, 110)
+    array = [secrets.SystemRandom().randint(-1000, 1000) for i in range(100)]
+    k = secrets.SystemRandom().randint(0, 110)
     print(f"The maximum sum of {k} consecutive elements is {max_sum_in_array(array,k)}")

@@ -17,13 +17,12 @@ Potential Future Ideas:
 """
 
 from __future__ import annotations
-
-import random
 import unittest
 from pprint import pformat
 from typing import Generic, TypeVar
 
 import pytest
+import secrets
 
 T = TypeVar("T")
 
@@ -243,11 +242,9 @@ class TestGraphMatrix(unittest.TestCase):
     ) -> list[list[int]]:
         assert edge_pick_count <= len(vertices)
 
-        random_source_vertices: list[int] = random.sample(
-            vertices[0 : int(len(vertices) / 2)], edge_pick_count
+        random_source_vertices: list[int] = secrets.SystemRandom().sample(vertices[0 : int(len(vertices) / 2)], edge_pick_count
         )
-        random_destination_vertices: list[int] = random.sample(
-            vertices[int(len(vertices) / 2) :], edge_pick_count
+        random_destination_vertices: list[int] = secrets.SystemRandom().sample(vertices[int(len(vertices) / 2) :], edge_pick_count
         )
         random_edges: list[list[int]] = []
 
@@ -267,8 +264,7 @@ class TestGraphMatrix(unittest.TestCase):
             )
 
         # generate graph input
-        random_vertices: list[int] = random.sample(
-            range(min_val, max_val + 1), vertex_count
+        random_vertices: list[int] = secrets.SystemRandom().sample(range(min_val, max_val + 1), vertex_count
         )
         random_edges: list[list[int]] = self.__generate_random_edges(
             random_vertices, edge_pick_count
@@ -307,7 +303,7 @@ class TestGraphMatrix(unittest.TestCase):
         assert directed_graph.directed
 
     def test_contains_vertex(self) -> None:
-        random_vertices: list[int] = random.sample(range(101), 20)
+        random_vertices: list[int] = secrets.SystemRandom().sample(range(101), 20)
 
         # Build graphs WITHOUT edges
         undirected_graph = GraphAdjacencyMatrix(
@@ -323,7 +319,7 @@ class TestGraphMatrix(unittest.TestCase):
             assert (num in random_vertices) == directed_graph.contains_vertex(num)
 
     def test_add_vertices(self) -> None:
-        random_vertices: list[int] = random.sample(range(101), 20)
+        random_vertices: list[int] = secrets.SystemRandom().sample(range(101), 20)
 
         # build empty graphs
         undirected_graph: GraphAdjacencyMatrix = GraphAdjacencyMatrix(
@@ -347,7 +343,7 @@ class TestGraphMatrix(unittest.TestCase):
             )
 
     def test_remove_vertices(self) -> None:
-        random_vertices: list[int] = random.sample(range(101), 20)
+        random_vertices: list[int] = secrets.SystemRandom().sample(range(101), 20)
 
         # build graphs WITHOUT edges
         undirected_graph = GraphAdjacencyMatrix(
@@ -371,8 +367,8 @@ class TestGraphMatrix(unittest.TestCase):
             )
 
     def test_add_and_remove_vertices_repeatedly(self) -> None:
-        random_vertices1: list[int] = random.sample(range(51), 20)
-        random_vertices2: list[int] = random.sample(range(51, 101), 20)
+        random_vertices1: list[int] = secrets.SystemRandom().sample(range(51), 20)
+        random_vertices2: list[int] = secrets.SystemRandom().sample(range(51, 101), 20)
 
         # build graphs WITHOUT edges
         undirected_graph = GraphAdjacencyMatrix(
@@ -443,7 +439,7 @@ class TestGraphMatrix(unittest.TestCase):
 
     def test_add_edge(self) -> None:
         # generate graph input
-        random_vertices: list[int] = random.sample(range(101), 15)
+        random_vertices: list[int] = secrets.SystemRandom().sample(range(101), 15)
         random_edges: list[list[int]] = self.__generate_random_edges(random_vertices, 4)
 
         # build graphs WITHOUT edges

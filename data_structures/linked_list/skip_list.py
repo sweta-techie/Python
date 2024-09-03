@@ -6,8 +6,8 @@ https://epaperpress.com/sortsearch/download/skiplist.pdf
 from __future__ import annotations
 
 from itertools import pairwise
-from random import random
 from typing import Generic, TypeVar
+import secrets
 
 KT = TypeVar("KT")
 VT = TypeVar("VT")
@@ -120,7 +120,7 @@ class SkipList(Generic[KT, VT]):
         """
 
         level = 1
-        while random() < self.p and level < self.max_level:
+        while secrets.SystemRandom().random() < self.p and level < self.max_level:
             level += 1
 
         return level
