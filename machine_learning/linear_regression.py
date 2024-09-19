@@ -9,7 +9,7 @@ Rating). We try to best fit a line through dataset and estimate the parameters.
 """
 
 import numpy as np
-import requests
+from security import safe_requests
 
 
 def collect_dataset():
@@ -17,7 +17,7 @@ def collect_dataset():
     The dataset contains ADR vs Rating of a Player
     :return : dataset obtained from the link, as matrix
     """
-    response = requests.get(
+    response = safe_requests.get(
         "https://raw.githubusercontent.com/yashLadha/The_Math_of_Intelligence/"
         "master/Week1/ADRvsRating.csv",
         timeout=10,
