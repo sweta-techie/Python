@@ -1,6 +1,7 @@
 """Get the site emails from URL."""
 
 from __future__ import annotations
+from security import safe_requests
 
 __author__ = "Muhammad Umer Farooq"
 __license__ = "MIT"
@@ -12,8 +13,6 @@ __status__ = "Alpha"
 import re
 from html.parser import HTMLParser
 from urllib import parse
-
-import requests
 
 
 class Parser(HTMLParser):
@@ -77,7 +76,7 @@ def emails_from_url(url: str = "https://github.com") -> list[str]:
 
     try:
         # Open URL
-        r = requests.get(url, timeout=10)
+        r = safe_requests.get(url, timeout=10)
 
         # pass the raw HTML to the parser to get links
         parser.feed(r.text)
@@ -88,7 +87,7 @@ def emails_from_url(url: str = "https://github.com") -> list[str]:
             # open URL.
             # read = requests.get(link)
             try:
-                read = requests.get(link, timeout=10)
+                read = safe_requests.get(link, timeout=10)
                 # Get the valid email.
                 emails = re.findall("[a-zA-Z0-9]+@" + domain, read.text)
                 # If not in list then append it.
