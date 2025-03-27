@@ -1,6 +1,5 @@
 import shutil
-
-import requests
+from security import safe_requests
 
 
 def get_apod_data(api_key: str) -> dict:
@@ -9,14 +8,14 @@ def get_apod_data(api_key: str) -> dict:
     Get your API Key from: https://api.nasa.gov/
     """
     url = "https://api.nasa.gov/planetary/apod"
-    return requests.get(url, params={"api_key": api_key}, timeout=10).json()
+    return safe_requests.get(url, params={"api_key": api_key}, timeout=10).json()
 
 
 def save_apod(api_key: str, path: str = ".") -> dict:
     apod_data = get_apod_data(api_key)
     img_url = apod_data["url"]
     img_name = img_url.split("/")[-1]
-    response = requests.get(img_url, stream=True, timeout=10)
+    response = safe_requests.get(img_url, stream=True, timeout=10)
 
     with open(f"{path}/{img_name}", "wb+") as img_file:
         shutil.copyfileobj(response.raw, img_file)
@@ -29,7 +28,7 @@ def get_archive_data(query: str) -> dict:
     Get the data of a particular query from NASA archives
     """
     url = "https://images-api.nasa.gov/search"
-    return requests.get(url, params={"q": query}, timeout=10).json()
+    return safe_requests.get(url, params={"q": query}, timeout=10).json()
 
 
 if __name__ == "__main__":
