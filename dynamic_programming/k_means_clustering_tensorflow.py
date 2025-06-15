@@ -1,7 +1,7 @@
-from random import shuffle
 
 import tensorflow as tf
 from numpy import array
+import secrets
 
 
 def tf_k_means_cluster(vectors, noofclusters):
@@ -20,7 +20,7 @@ def tf_k_means_cluster(vectors, noofclusters):
 
     # Will help select random centroids from among the available vectors
     vector_indices = list(range(len(vectors)))
-    shuffle(vector_indices)
+    secrets.SystemRandom().shuffle(vector_indices)
 
     # GRAPH OF COMPUTATION
     # We initialize a new graph and set it as the default during each run
